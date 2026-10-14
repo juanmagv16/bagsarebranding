@@ -146,6 +146,7 @@
     border: 1.5px solid var(--line); border-radius: var(--radius);
     padding: 26px 24px 24px; background: #fff; display: flex; flex-direction: column; gap: 10px;
     transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+    cursor: pointer;
   }
   .card .icon {
     width: 56px; height: 56px; border-radius: 50%; background: var(--blue);
@@ -157,27 +158,16 @@
   .card p { margin: 0 0 8px; font-size: 14px; color: var(--muted); flex: 1; }
   .card p strong { color: var(--ink); display: block; margin-bottom: 2px; }
   .card .btn { background: var(--blue); font-size: 12px; padding: 8px 16px; }
-  .card:hover .btn, .card.featured .btn { background: #14161c; }
+  /* El fondo azul aparece solo cuando se hace clic en la tarjeta */
+  .card.selected .btn, .card:active .btn { background: #14161c; }
 
-  .card.featured, .card:hover, .card:focus-within {
+  .card.selected, .card:active {
     background: var(--blue); color: #fff; transform: translateY(-3px);
     box-shadow: 0 14px 30px rgba(0, 88, 155, .25);
   }
-  .card.featured p, .card:hover p, .card:focus-within p { color: #e8f1fa; }
-  .card.featured p strong, .card:hover p strong, .card:focus-within p strong { color: #fff; }
-  .card.featured .icon, .card:hover .icon, .card:focus-within .icon { background: #14161c; }
-  .cards:hover .card.featured:not(:hover),
-  .cards:focus-within .card.featured:not(:focus-within) {
-    background: #fff; color: var(--ink); transform: none; box-shadow: none;
-  }
-  .cards:hover .card.featured:not(:hover) p,
-  .cards:focus-within .card.featured:not(:focus-within) p { color: var(--muted); }
-  .cards:hover .card.featured:not(:hover) p strong,
-  .cards:focus-within .card.featured:not(:focus-within) p strong { color: var(--ink); }
-  .cards:hover .card.featured:not(:hover) .icon,
-  .cards:focus-within .card.featured:not(:focus-within) .icon { background: var(--blue); }
-  .cards:hover .card.featured:not(:hover) .btn,
-  .cards:focus-within .card.featured:not(:focus-within) .btn { background: var(--blue); }
+  .card.selected p, .card:active p { color: #e8f1fa; }
+  .card.selected p strong, .card:active p strong { color: #fff; }
+  .card.selected .icon, .card:active .icon { background: #14161c; }
 
   /* ---------- Cifras ---------- */
   .stats { background: var(--blue); color: #fff; padding: 44px 0; }
@@ -334,7 +324,7 @@
       <h2 class="section-title">Trámites y servicios</h2>
       <div class="cards">
 
-        <article class="card featured">
+        <article class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg></div>
           <h3>Oficina Virtual</h3>
           <p><strong>Gestión online rápida y segura</strong>Consultá tu factura, pagá online y accedé a todos tus trámites sin moverte de tu casa.</p>
@@ -450,6 +440,15 @@
   // Los enlaces marcados como demo no llevan a ningún lado.
   document.querySelectorAll('a[data-demo]').forEach(function (a) {
     a.addEventListener('click', function (e) { e.preventDefault(); });
+  });
+
+
+  // Tarjetas de trámites: la que recibe el clic se pinta de azul; las otras vuelven a blanco.
+  var cards = document.querySelectorAll('.cards .card');
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      cards.forEach(function (other) { other.classList.toggle('selected', other === card); });
+    });
   });
 
   // Menú en celular
