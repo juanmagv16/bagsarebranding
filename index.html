@@ -263,34 +263,174 @@
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; scroll-behavior: auto !important; }
   }
+
+  /* === Rebranding v2: submenús, pie completo y secciones de contenido === */
+  .menu { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; align-items: center; }
+  .menu > li { position: relative; display: flex; align-items: center; padding: 8px 0; }
+  .sub-toggle { display: none; }
+  .submenu {
+    display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    background: #fff; color: var(--ink); border-radius: 16px; padding: 20px 24px;
+    box-shadow: 0 18px 40px rgba(14, 30, 60, .25); z-index: 60;
+    grid-auto-flow: column; gap: 32px; max-width: min(960px, 94vw);
+  }
+  .menu > li:hover > .submenu, .menu > li:focus-within > .submenu { display: grid; }
+  .sub-col h5 {
+    margin: 0 0 10px; font: 700 11.5px/1.2 var(--font-body); letter-spacing: .09em;
+    text-transform: uppercase; color: var(--pink);
+  }
+  .sub-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .main-nav .submenu a {
+    color: var(--ink); font-weight: 500; font-size: 14px; padding: 4px 0;
+    border-bottom: 0; white-space: nowrap; display: block;
+  }
+  .main-nav .submenu a:hover { color: var(--blue); text-decoration: underline; border-bottom: 0; }
+  .main-nav a[aria-current="page"] { border-bottom-color: #fff; }
+
+  .socials { display: flex; gap: 12px; }
+  .socials a {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.85);
+    display: grid; place-items: center; transition: background .2s ease;
+  }
+  .socials a:hover { background: rgba(255,255,255,.2); }
+  .socials svg { width: 20px; height: 20px; fill: #fff; }
+  .site-footer .footer-grid { grid-template-columns: 1fr 2.6fr; }
+  .site-footer .footer-cols { grid-template-columns: .85fr .85fr 1.5fr; }
+  .contact-list { gap: 12px !important; }
+  .footer-cols > div { min-width: 0; }
+  .contact-list a { overflow-wrap: anywhere; }
+  .contact-list li { display: grid; gap: 1px; }
+  .contact-list b { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; opacity: .85; font-weight: 700; }
+  .contact-list b a { text-decoration: underline; }
+
+  .stats-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .promo {
+    background: linear-gradient(100deg, var(--blue) 0%, #0b6fb8 100%); color: #fff; border-radius: 28px;
+    padding: 36px 44px; margin-top: 40px; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+  }
+  .promo h3 { font-family: var(--font-head); font-weight: 600; font-size: clamp(22px, 2.6vw, 30px); margin: 0 0 8px; }
+  .promo p { margin: 0; max-width: 560px; opacity: .95; }
+  .promo .btn { background: #fff; color: var(--blue); }
+  .promo .btn:hover { background: #e8f1fa; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: start; }
+  .about-grid h2 { font-family: var(--font-head); font-weight: 600; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.1; margin: 8px 0 0; letter-spacing: -.01em; }
+  .about-grid p { margin: 0 0 14px; font-size: 17px; color: var(--muted); }
+  .about-grid .btn { margin-top: 10px; }
+
+  .check-list { list-style: none; margin: 14px 0 22px; padding: 0; display: grid; gap: 10px; max-width: 520px; }
+  .check-list li { position: relative; padding-left: 30px; color: var(--muted); }
+  .check-list li::before {
+    content: ""; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--blue-bright) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") center / 12px no-repeat;
+  }
+  .safety-copy .btn { margin-top: 4px; }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+  .contact-info h2 { font-family: var(--font-head); font-weight: 600; font-size: clamp(30px, 3.6vw, 42px); line-height: 1.1; margin: 8px 0 10px; letter-spacing: -.01em; }
+  .contact-info > p { color: var(--muted); margin: 0; max-width: 460px; }
+  .channels { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; }
+  .channels li { display: grid; gap: 2px; }
+  .channels b { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); }
+  .channels .alert b { color: var(--red-dark); }
+  .channels a, .channels span { font-size: 17px; text-decoration: none; }
+  .channels a:hover { text-decoration: underline; }
+  .contact-form {
+    border: 1.5px solid var(--line); border-radius: 24px; padding: 28px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .contact-form label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; }
+  .contact-form input, .contact-form textarea {
+    font: inherit; font-weight: 400; padding: 12px 14px; border: 1.5px solid #c9d3e0; border-radius: 12px; background: #fff; color: var(--ink);
+  }
+  .contact-form input:focus, .contact-form textarea:focus { outline: 3px solid #ffb703; outline-offset: 1px; border-color: var(--blue-bright); }
+  .contact-form .full { grid-column: 1 / -1; }
+  .form-note { font-size: 12.5px; color: var(--muted); margin: 0; }
+  .form-ok { display: none; background: #e6f4ea; color: #14532d; border-radius: 12px; padding: 12px 14px; font-size: 14px; }
+  .form-ok.show { display: block; }
+  .office-link { margin-top: 18px; display: inline-block; color: var(--blue); font-weight: 700; font-size: 14px; }
+
+  .pay-chips { list-style: none; padding: 0; margin: 4px 0 6px; display: flex; flex-wrap: wrap; gap: 8px; max-width: 540px; }
+  .pay-chips li { background: #e6f0fb; color: var(--blue); font-weight: 700; font-size: 13.5px; padding: 6px 14px; border-radius: 999px; }
+  .mini-title { font-weight: 700; color: var(--ink) !important; margin: 18px 0 8px !important; font-size: 15px !important; }
+
+  .note { font-size: 14px !important; color: var(--muted); border-left: 3px solid var(--blue-bright); padding-left: 12px; margin: 14px 0 0 !important; }
+  .guides-head { text-align: center; margin-bottom: 40px; }
+  .guides-head h2 { font-family: var(--font-head); font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); margin: 12px 0 0; letter-spacing: -.01em; }
+  .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .guide {
+    border: 1.5px solid var(--line); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 8px;
+    text-decoration: none; background: #fff; transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .guide:hover { border-color: var(--blue); box-shadow: 0 12px 28px rgba(0, 88, 155, .15); transform: translateY(-2px); }
+  .guide h3 { font-family: var(--font-head); font-weight: 500; font-size: 19px; margin: 0; }
+  .guide p { margin: 0; font-size: 14.5px; color: var(--muted); flex: 1; }
+  .guide .more { color: var(--blue); font-weight: 700; font-size: 13.5px; margin-top: 6px; }
+
+  @media (max-width: 980px) {
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 28px; }
+    .guide-grid { grid-template-columns: repeat(2, 1fr); }
+    .site-footer .footer-grid { grid-template-columns: 1fr; }
+    .promo { padding: 28px; }
+  }
+  @media (max-width: 860px) {
+    .main-nav { max-height: calc(100vh - 190px); overflow-y: auto; }
+    .menu { flex-direction: column; align-items: stretch; gap: 0; width: 100%; }
+    .menu > li { flex-wrap: wrap; padding: 0; justify-content: space-between; }
+    .menu > li > a { flex: 1; }
+    .sub-toggle {
+      display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; color: #fff; cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,.25);
+    }
+    .sub-toggle svg { width: 18px; height: 18px; transition: transform .2s ease; }
+    .menu > li.open .sub-toggle svg { transform: rotate(180deg); }
+    .submenu {
+      position: static; transform: none; width: 100%; background: rgba(255,255,255,.14); color: #fff; box-shadow: none;
+      border-radius: 12px; padding: 12px 16px; margin: 6px 0 10px; grid-auto-flow: row; gap: 14px; max-width: none;
+    }
+    .menu > li:hover > .submenu, .menu > li:focus-within > .submenu { display: none; }
+    .menu > li.open > .submenu { display: grid; }
+    .main-nav .submenu a { color: #fff; white-space: normal; padding: 6px 0; border-bottom: 0; }
+    .main-nav .submenu a:hover { color: #fff; }
+    .sub-col h5 { color: #ffd1e6; }
+  }
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr !important; }
+    .site-footer .footer-cols { grid-template-columns: 1fr; }
+    .guide-grid { grid-template-columns: 1fr; }
+    .contact-form { grid-template-columns: 1fr; padding: 20px; }
+    .promo { border-radius: 22px; }
+  }
 </style>
 </head>
 <body>
 
 <div class="mockup-bar" role="note">
-  <strong>Propuesta de rediseño.</strong> Maqueta conceptual: no es el sitio oficial de BAGSA. Solo algunos botones llevan a sitios reales.
+  <strong>Propuesta de rediseño.</strong> Maqueta conceptual: no es el sitio oficial de BAGSA. Los datos de contacto son los del sitio actual; solo algunos botones llevan a sitios reales.
 </div>
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="#" data-demo aria-label="BAGSA, Buenos Aires Gas S.A."><span class="logo-img" aria-hidden="true"></span></a>
+    <a class="logo" href="index.html" aria-label="BAGSA, Buenos Aires Gas S.A. (inicio)"><span class="logo-img" aria-hidden="true"></span></a>
 
     <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
 
     <nav class="main-nav" id="main-nav" aria-label="Principal">
-      <a href="#" data-demo>Institucional</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#" data-demo>Información</a>
-      <a href="seguridad.html">Seguridad</a>
-      <a href="#contacto">Contacto</a>
+      <ul class="menu">
+        <li class="has-sub"><a href="https://www.bagsa.com.ar/index.php/sobre-nosotros/" target="_blank" rel="noopener noreferrer">Institucional</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Institucional"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><ul><li><a href="https://www.bagsa.com.ar/index.php/sobre-nosotros/" target="_blank" rel="noopener noreferrer">Sobre Nosotros</a></li><li><a href="https://www.bagsa.com.ar/index.php/3-2/" target="_blank" rel="noopener noreferrer">Código de Ética</a></li><li><a href="https://www.bagsa.com.ar/index.php/donde-estamos/" target="_blank" rel="noopener noreferrer">Dónde estamos</a></li><li><a href="https://www.bagsa.com.ar/index.php/compromiso/" target="_blank" rel="noopener noreferrer">Compromiso</a></li><li><a href="https://www.bagsa.com.ar/index.php/galeria-de-imagenes/" target="_blank" rel="noopener noreferrer">Galería de imágenes</a></li><li><a href="https://www.bagsa.com.ar/index.php/trabaja-con-nosotros/" target="_blank" rel="noopener noreferrer">Trabajá con nosotros</a></li></ul></div></div></li>
+        <li class="has-sub"><a href="index.html#servicios">Servicios</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Servicios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><h5>Facturas</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/conoce-tu-factura/" target="_blank" rel="noopener noreferrer">Conocé tu factura</a></li><li><a href="https://oficinavirtual.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Descargá tu factura</a></li><li><a href="https://www.bagsa.com.ar/old/cupon/index.php" target="_blank" rel="noopener noreferrer">Cupón de pago</a></li><li><a href="https://www.bagsa.com.ar/index.php/conoce-tu-factura/#simulador" target="_blank" rel="noopener noreferrer">Simulador de consumo</a></li><li><a href="https://www.bagsa.com.ar/index.php/conoce-tu-factura/#factura-elec" target="_blank" rel="noopener noreferrer">Factura electrónica</a></li></ul></div><div class="sub-col"><h5>Medios de pago</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/medios-de-pago/#credito" target="_blank" rel="noopener noreferrer">Pagá tu factura con crédito</a></li><li><a href="https://www.bagsa.com.ar/index.php/medios-de-pago/#debito" target="_blank" rel="noopener noreferrer">Débito automático</a></li></ul></div><div class="sub-col"><h5>Matriculados</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/matriculados/#gasista" target="_blank" rel="noopener noreferrer">Listado de gasistas</a></li><li><a href="https://www.bagsa.com.ar/index.php/matriculados/#porque" target="_blank" rel="noopener noreferrer">¿Por qué un gasista?</a></li><li><a href="https://www.bagsa.com.ar/index.php/matriculados/#categorias" target="_blank" rel="noopener noreferrer">Categorías</a></li><li><a href="https://www.bagsa.com.ar/index.php/matriculados/#documentacion" target="_blank" rel="noopener noreferrer">Documentación</a></li><li><a href="https://www.bagsa.com.ar/index.php/matriculados/#formulario" target="_blank" rel="noopener noreferrer">Formularios</a></li><li><a href="https://oficinamatriculados.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Portal Matriculados</a></li></ul></div></div></li>
+        <li class="has-sub"><a href="https://www.bagsa.com.ar/index.php/tramites/" target="_blank" rel="noopener noreferrer">Información</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Información"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><h5>Trámites</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/tramites/#obtencion" target="_blank" rel="noopener noreferrer">Obtención del servicio</a></li><li><a href="https://www.bagsa.com.ar/index.php/tramites/#baja-del-servicio" target="_blank" rel="noopener noreferrer">Baja del servicio</a></li><li><a href="https://www.bagsa.com.ar/index.php/tramites/#cambio-de-titularidad" target="_blank" rel="noopener noreferrer">Cambio de titularidad</a></li><li><a href="https://www.bagsa.com.ar/index.php/tramites/#cambio-de-domicilio" target="_blank" rel="noopener noreferrer">Cambio de domicilio</a></li><li><a href="https://www.bagsa.com.ar/index.php/tramites/#reconexion" target="_blank" rel="noopener noreferrer">Reconexión</a></li><li><a href="https://www.bagsa.com.ar/index.php/tramites/#inquilinos" target="_blank" rel="noopener noreferrer">Información para inquilinos</a></li></ul></div><div class="sub-col"><h5>Normativas</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/normativas/#reglamento-de-servicios" target="_blank" rel="noopener noreferrer">Reglamento de servicios</a></li><li><a href="https://www.bagsa.com.ar/index.php/normativas/#marco-regulatorio" target="_blank" rel="noopener noreferrer">Marco regulatorio</a></li><li><a href="https://www.bagsa.com.ar/index.php/normativas/#instalaciones-internas" target="_blank" rel="noopener noreferrer">Instalaciones internas</a></li><li><a href="https://www.bagsa.com.ar/index.php/normativas/#artefactos" target="_blank" rel="noopener noreferrer">Artefactos</a></li></ul></div><div class="sub-col"><h5>Tarifas</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/tarifas/#cuadros-tarifarios" target="_blank" rel="noopener noreferrer">Cuadro tarifario</a></li><li><a href="https://www.bagsa.com.ar/index.php/tarifas/#cuadros-tasas-y-cargos" target="_blank" rel="noopener noreferrer">Cuadros tasas y cargos</a></li><li><a href="https://www.argentina.gob.ar/subsidios" target="_blank" rel="noopener noreferrer">Subsidio Energético Focalizado</a></li></ul></div><div class="sub-col"><h5>Más información</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/preguntas-frecuentes/" target="_blank" rel="noopener noreferrer">Preguntas frecuentes</a></li><li><a href="https://www.bagsa.com.ar/index.php/listado-de-empresas-contratistas/" target="_blank" rel="noopener noreferrer">Empresas contratistas</a></li><li><a href="https://www.bagsa.com.ar/index.php/avance-de-obras/" target="_blank" rel="noopener noreferrer">Avance de obras</a></li><li><a href="https://www.bagsa.com.ar/index.php/licitaciones-activas/" target="_blank" rel="noopener noreferrer">Licitaciones activas</a></li></ul></div></div></li>
+        <li class="has-sub"><a href="seguridad.html">Seguridad</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Seguridad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><ul><li><a href="https://www.bagsa.com.ar/index.php/manual-de-emergencias-y-falta-de-suministro/" target="_blank" rel="noopener noreferrer">Manual de emergencias y falta de suministro</a></li><li><a href="https://www.bagsa.com.ar/index.php/consumo-responsable/" target="_blank" rel="noopener noreferrer">Consumo responsable</a></li><li><a href="https://www.bagsa.com.ar/index.php/gas-por-red/" target="_blank" rel="noopener noreferrer">Gas por red</a></li><li><a href="https://www.bagsa.com.ar/index.php/monoxido-de-carbono/" target="_blank" rel="noopener noreferrer">Monóxido de carbono</a></li><li><a href="https://www.bagsa.com.ar/index.php/medidas-de-seguridad/" target="_blank" rel="noopener noreferrer">Medidas de seguridad</a></li><li><a href="https://www.bagsa.com.ar/index.php/prevencion-de-danos/" target="_blank" rel="noopener noreferrer">Prevención de daños</a></li></ul></div></div></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
     </nav>
 
-    <a class="emergency-pill" href="#" data-demo>
+    <a class="emergency-pill" href="tel:08003332247">
       <b>Emergencias</b>
-      <small>Atención las 24 horas, los 365 días del año.</small>
-      <span>0800-333-3456</span>
+      <small>Atención las 24 horas.</small>
+      <span>0800-333-2247</span>
     </a>
   </div>
 </header>
@@ -300,8 +440,8 @@
     <div class="container hero-inner">
       <div class="hero-copy">
         <h1>Llevamos <em>gas a cada</em> rincón de la Provincia</h1>
-        <p>Conectamos más de 77 localidades bonaerenses con energía segura y de calidad.</p>
-        <a class="btn" href="#servicios">
+        <p>Conectamos más de 60 localidades bonaerenses con energía segura y de calidad.</p>
+        <a class="btn" href="#contacto">
           Contactanos
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6"/></svg>
         </a>
@@ -349,7 +489,7 @@
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 4 8 4-8 4-8-4 8-4z"/><path d="m4 12 8 4 8-4"/><path d="m4 16 8 4 8-4"/></svg></div>
           <h3>Tarifas Vigentes</h3>
           <p><strong>Consultá el cuadro tarifario actualizado</strong>Información oficial sobre los valores del servicio de gas natural y GLP.</p>
-          <a class="btn" href="#" data-demo>Ver tarifas</a>
+          <a class="btn" href="https://www.bagsa.com.ar/index.php/tarifas/" target="_blank" rel="noopener noreferrer">Ver tarifas</a>
         </article>
 
         <article class="card">
@@ -359,16 +499,44 @@
           <a class="btn" href="https://oficinamatriculados.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Ir al portal</a>
         </article>
 
+        <article class="card">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20z"/><path d="M14 3.5V8h4M9.5 12.5h5M9.5 16h5"/></svg></div>
+          <h3>Conocé tu factura</h3>
+          <p><strong>Entendé cada dato de tu factura</strong>Descargá tu factura, usá el simulador de consumo y adherite a la factura electrónica.</p>
+          <a class="btn" href="https://www.bagsa.com.ar/index.php/conoce-tu-factura/" target="_blank" rel="noopener noreferrer">Ver más</a>
+        </article>
+
+      </div>
+
+      <div class="promo">
+        <div>
+          <h3>Pagá tu factura sin salir de casa</h3>
+          <p>Adherite al débito automático con tu tarjeta Visa de débito o crédito, desde la Oficina Virtual.</p>
+        </div>
+        <a class="btn" href="https://www.bagsa.com.ar/index.php/medios-de-pago/#debito" target="_blank" rel="noopener noreferrer">Más información</a>
       </div>
     </div>
   </section>
 
   <section class="stats" aria-label="BAGSA en cifras">
     <div class="container stats-grid">
-      <div class="stat"><b>+140mil</b><span>Usuarios conectados</span></div>
-      <div class="stat"><b>+1000km</b><span>De redes de gas operadas en la Provincia</span></div>
-      <div class="stat"><b>+77</b><span>Localidades con servicio</span></div>
-      <div class="stat"><b>+20</b><span>Años de experiencia</span></div>
+      <div class="stat"><b>+40.000</b><span>Usuarios residenciales, comerciales e industriales</span></div>
+      <div class="stat"><b>+60</b><span>Localidades bonaerenses con servicio</span></div>
+      <div class="stat"><b>24 hs</b><span>Atención de emergencias</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="institucional">
+    <div class="container about-grid">
+      <div>
+        <span class="tag">Institucional</span>
+        <h2>Quiénes somos</h2>
+      </div>
+      <div>
+        <p>Buenos Aires Gas S.A. (BAGSA) es una empresa subdistribuidora de gas natural y propano por redes. Depende de la Subsecretaría de Energía del Ministerio de Infraestructura y Servicios Públicos de la Provincia de Buenos Aires.</p>
+        <p>Nuestro objetivo es llevar el servicio de gas por redes a los habitantes de pequeñas localidades bonaerenses que no son abastecidas por las distribuidoras.</p>
+        <a class="btn" href="https://www.bagsa.com.ar/index.php/sobre-nosotros/" target="_blank" rel="noopener noreferrer">Conocer más</a>
+      </div>
     </div>
   </section>
 
@@ -376,7 +544,7 @@
     <div class="container">
       <div class="safety-head">
         <span class="tag">Prevención y control</span>
-        <h2 class="section-title">Seguridad en el Hogar</h2>
+        <h2 class="section-title">Monóxido de carbono: evitemos la intoxicación</h2>
       </div>
       <div class="safety-grid">
         <div class="photo-card" role="img" aria-label="Espacio reservado para una foto">
@@ -384,34 +552,74 @@
           <small>Localidad de la obra · foto</small>
         </div>
         <div class="safety-copy">
-          <h3>Revisá tus artefactos, ventilá los ambientes y controlá la llama.</h3>
-          <p>Texto de ejemplo: una revisión periódica de las instalaciones y los artefactos ayuda a prevenir accidentes. Este espacio es para el contenido oficial de seguridad.</p>
+          <h3>Revisar periódicamente los artefactos a gas puede salvar vidas.</h3>
+          <p>El monóxido de carbono no tiene olor, color ni sabor, y es muy tóxico.</p>
+          <ul class="check-list">
+            <li>Instalá rejillas de ventilación permanente donde haya artefactos que toman el aire del propio ambiente.</li>
+            <li>En baños y dormitorios, usá solo artefactos de tiro balanceado.</li>
+            <li>Controlá que la llama sea azul: si es amarilla, naranja o roja, el artefacto funciona mal.</li>
+            <li>Contratá siempre a un gasista matriculado.</li>
+          </ul>
+          <a class="btn" href="https://www.bagsa.com.ar/index.php/monoxido-de-carbono/" target="_blank" rel="noopener noreferrer">Medidas de prevención</a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="contacto" style="padding-top:24px">
+    <div class="container contact-grid">
+      <div class="contact-info">
+        <span class="tag">Contacto</span>
+        <h2>Nos encantaría recibir tu mensaje</h2>
+        <p>Escribinos o comunicate por el canal que te resulte más cómodo.</p>
+        <ul class="channels">
+          <li><b>Atención comercial</b><a href="tel:08001225888">0800-122-5888</a></li>
+          <li><b>WhatsApp</b><span>221-572-7434</span></li>
+          <li><b>Mail</b><a href="mailto:atencioncomercial@bagsa.com.ar">atencioncomercial@bagsa.com.ar</a></li>
+          <li><b>Sede central</b><span>Calle 48 N°536 (entre 5 y 6), La Plata (1900), Buenos Aires</span></li>
+          <li class="alert"><b>Emergencias 24 hs</b><a href="tel:08003332247">0800-333-2247</a></li>
+        </ul>
+        <a class="office-link" href="https://www.bagsa.com.ar/wp-content/uploads/2026/08/localidades_web-preliminar.xlsx" target="_blank" rel="noopener noreferrer">Ver otras oficinas en la Provincia de Buenos Aires</a>
+      </div>
+      <form class="contact-form" id="contact-form" novalidate>
+        <label>Nombre<input type="text" name="nombre" autocomplete="given-name" required></label>
+        <label>Apellido<input type="text" name="apellido" autocomplete="family-name" required></label>
+        <label>Email<input type="email" name="email" autocomplete="email" required></label>
+        <label>Teléfono<input type="tel" name="telefono" autocomplete="tel" required></label>
+        <label>Localidad<input type="text" name="localidad" required></label>
+        <label>N° de usuario<input type="text" name="usuario" inputmode="numeric" required></label>
+        <label class="full">Comentario o mensaje<textarea name="mensaje" rows="4"></textarea></label>
+        <div class="full"><button class="btn" type="submit">Enviar mensaje</button></div>
+        <p class="form-note full">Maqueta: este formulario no envía datos.</p>
+        <p class="form-ok full" id="form-ok" role="status">Gracias. En el sitio real, el mensaje se enviaría a BAGSA.</p>
+      </form>
     </div>
   </section>
 </main>
 
 <div class="emergency-banner" id="emergencias">
   <h2>Emergencias por pérdida de gas</h2>
-  <p>Atención las 24 horas, los 365 días del año.</p>
-  <a href="#" data-demo>LÍNEA GRATUITA: 0800-333-3456</a>
+  <p>Atención las 24 horas.</p>
+  <a href="tel:08003332247">LÍNEA GRATUITA: 0800-333-2247</a>
 </div>
 
-<footer class="site-footer" id="contacto">
+<footer class="site-footer" id="pie">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a class="logo" href="#" data-demo aria-label="BAGSA, Buenos Aires Gas S.A."><span class="logo-img" aria-hidden="true"></span></a>
+        <a class="logo" href="index.html" aria-label="BAGSA, Buenos Aires Gas S.A. (inicio)"><span class="logo-img" aria-hidden="true"></span></a>
         <div class="gba">Gobierno de la Provincia de<b>Buenos Aires</b></div>
+        <div class="socials"><a href="https://www.instagram.com/bagsa.gas" target="_blank" rel="noopener noreferrer" aria-label="Instagram de BAGSA"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4.5" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="16.8" cy="7.2" r="1.1"/></svg></a><a href="https://www.facebook.com/bagsagas" target="_blank" rel="noopener noreferrer" aria-label="Facebook de BAGSA"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 20v-6.9h2.3l.4-2.7h-2.7V8.7c0-.8.3-1.3 1.4-1.3h1.4V5a18 18 0 0 0-2-.1c-2.1 0-3.5 1.3-3.5 3.6v2h-2.3v2.7h2.3V20z"/></svg></a><a href="https://www.linkedin.com/company/bagsagas" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de BAGSA"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 9.2h2.9V18H5.5zM7 5.2a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10.2 9.2H13v1.2c.5-.9 1.6-1.4 2.9-1.4 2.7 0 3.1 1.8 3.1 4V18h-2.9v-4.3c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2V18h-2.9z"/></svg></a></div>
       </div>
 
       <div class="footer-cols">
         <div>
-          <h4>Links</h4>
+          <h4>Links de interés</h4>
           <ul>
-            <li><a href="#" data-demo>Portal de trámites PBA</a></li>
-            <li><a href="#" data-demo>Minfra</a></li>
+            <li><a href="https://www.bagsa.com.ar/index.php/tramites/" target="_blank" rel="noopener noreferrer">Trámites</a></li>
+            <li><a href="https://www.bagsa.com.ar/index.php/conoce-tu-factura/" target="_blank" rel="noopener noreferrer">Facturas</a></li>
+            <li><a href="https://www.bagsa.com.ar/index.php/normativas/" target="_blank" rel="noopener noreferrer">Normativas</a></li>
+            <li><a href="https://www.bagsa.com.ar/index.php/preguntas-frecuentes/" target="_blank" rel="noopener noreferrer">Preguntas Frecuentes</a></li>
           </ul>
         </div>
         <div>
@@ -419,20 +627,22 @@
           <ul>
             <li><a href="https://oficinavirtual.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Oficina Virtual</a></li>
             <li><a href="https://oficinamatriculados.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Portal de matriculados</a></li>
-            <li><a href="#" data-demo>Tarifarios</a></li>
+            <li><a href="https://www.bagsa.com.ar/index.php/tarifas/" target="_blank" rel="noopener noreferrer">Tarifarios</a></li>
           </ul>
         </div>
         <div>
           <h4>Contacto</h4>
-          <ul>
-            <li>555-555-5555</li>
-            <li>contacto@ejemplo.com</li>
-            <li>Dirección de ejemplo, Ciudad, Buenos Aires</li>
+          <ul class="contact-list">
+            <li><b>Sede central</b>Calle 48 N°536 (1900) La Plata, Buenos Aires</li>
+            <li><b>Atención comercial</b><a href="tel:08001225888">0800-122-5888</a> · WhatsApp 221-572-7434</li>
+            <li><b>Mail</b><a href="mailto:atencioncomercial@bagsa.com.ar">atencioncomercial@bagsa.com.ar</a></li>
+            <li><b>Emergencias 24 hs</b><a href="tel:08003332247">0800-333-2247</a></li>
+            <li><b><a href="https://www.enargas.gob.ar/" target="_blank" rel="noopener noreferrer">ENReGE</a></b><a href="tel:08003334444">0800-333-4444</a></li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">Propuesta de rediseño · Maqueta conceptual con datos de ejemplo.</div>
+    <div class="footer-bottom">Propuesta de rediseño · Maqueta conceptual. Datos de contacto tomados del sitio oficial de BAGSA.</div>
   </div>
 </footer>
 
@@ -450,6 +660,25 @@
       cards.forEach(function (other) { other.classList.toggle('selected', other === card); });
     });
   });
+
+
+  // Submenús en celular
+  document.querySelectorAll('.sub-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var li = btn.closest('li');
+      var open = li.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  // Formulario de contacto (maqueta: no envía datos)
+  var form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('form-ok').classList.add('show');
+    });
+  }
 
   // Menú en celular
   var toggle = document.querySelector('.menu-toggle');
