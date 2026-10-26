@@ -535,6 +535,11 @@
   .map-note{font-size:14px;color:var(--muted);margin:0}
   .map-count{font-size:14px;color:var(--muted)}
   @media(max-width:860px){.map-wrap{grid-template-columns:1fr}#map,#map iframe{min-height:420px}.loc-list{max-height:300px}}
+  .detail{margin-top:14px;border:1.5px solid var(--line);border-radius:14px;background:#fff;padding:16px 18px;display:none}
+  .detail.on{display:block}.detail h3{margin:0 0 8px;font-family:var(--font-head)}
+  .detail dl{display:grid;grid-template-columns:150px 1fr;gap:6px 12px;margin:0;font-size:15px}.detail dt{font-weight:700}.detail dd{margin:0;overflow-wrap:anywhere}
+  .badge{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:#e6f6f9;color:var(--teal)}
+  @media(max-width:600px){.detail dl{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -585,14 +590,17 @@
     <div class="container">
       <div class="map-wrap">
         <div class="map-side">
-          <label class="sr-only" for="q" style="position:absolute;left:-9999px">Buscar localidad</label>
-          <input id="q" type="search" placeholder="Buscá tu localidad…" autocomplete="off">
+          <input id="q" type="search" placeholder="Buscá tu localidad…" aria-label="Buscar localidad" autocomplete="off">
           <select id="reg" aria-label="Filtrar por región"><option value="">Todas las regiones</option></select>
+          <select id="gas" aria-label="Filtrar por tipo de gas"><option value="">GN y GLP</option><option value="GN">Gas natural (GN)</option><option value="GLP">Gas licuado (GLP)</option></select>
           <div class="map-count" id="count" aria-live="polite"></div>
           <ul class="loc-list" id="list"></ul>
-          <p class="map-note">Horarios, direcciones y teléfonos de cada oficina: <a href="https://www.bagsa.com.ar/wp-content/uploads/2026/08/localidades_web-preliminar.xlsx" target="_blank" rel="noopener noreferrer">listado oficial de oficinas</a>.</p>
         </div>
-        <div id="map" role="region" aria-label="Mapa de localidades"></div>
+        <div>
+          <div id="map" role="region" aria-label="Mapa de localidades y oficinas"></div>
+          <div class="detail" id="detail" aria-live="polite"></div>
+          <p class="map-note">GN: gas natural · GLP: gas licuado de petróleo. Los teléfonos de emergencias de cada zona atienden las 24 hs.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -646,46 +654,21 @@
 <script src="data/localidades.js"></script>
 <script>
 (function(){
-  var D=window.BAGSA_DATA, KEY=(window.BAGSA_MAPS_KEY||'').trim();
-  var q=document.getElementById('q'),reg=document.getElementById('reg'),list=document.getElementById('list'),count=document.getElementById('count'),mapEl=document.getElementById('map');
-  var items=[{name:D.sede.name,region:'Sede central',sede:true,address:D.sede.address,query:D.sede.query}];
-  D.regiones.forEach(function(r){var o=document.createElement('option');o.value=o.textContent=r.nombre;reg.appendChild(o);
-    r.localidades.forEach(function(n){items.push({name:n,region:r.nombre,query:n+', Buenos Aires, Argentina'})});});
-  var map,markers=[],geocoder,infow,cache={};
-  try{cache=JSON.parse(localStorage.getItem('bagsa_geo')||'{}')}catch(e){}
-  function save(){try{localStorage.setItem('bagsa_geo',JSON.stringify(cache))}catch(e){}}
+  var R=window.BAGSA_ROWS,mid=window.BAGSA_MAP_ID;
+  var q=document.getElementById('q'),reg=document.getElementById('reg'),gas=document.getElementById('gas'),list=document.getElementById('list'),count=document.getElementById('count'),det=document.getElementById('detail'),mapEl=document.getElementById('map');
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  function filtered(){var t=q.value.trim().toLowerCase(),r=reg.value;
-    return items.filter(function(i){return (!r||i.region===r||i.sede)&&(!t||i.name.toLowerCase().indexOf(t)>-1)})}
-  function render(){var f=filtered();list.innerHTML='';
-    f.forEach(function(i){var li=document.createElement('li');if(i.sede)li.className='head-office';
-      li.innerHTML='<button type="button"><span>'+esc(i.name)+'</span><small>'+esc(i.region)+'</small></button>';
-      li.firstChild.addEventListener('click',function(){focusItem(i,li)});list.appendChild(li)});
-    count.textContent=(f.length-1)+' localidades + sede central';
-    if(map)syncMarkers(f)}
-  function infoHtml(i){return '<div style="font-family:DM Sans,sans-serif;max-width:240px"><strong>'+esc(i.name)+'</strong><br>'+(i.address?esc(i.address)+'<br>':'')+'<span style="color:#4d5360">'+esc(i.region)+'</span><br><a href="tel:08001225888">0800-122-5888</a> · <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(i.query)+'">Cómo llegar</a></div>'}
-  function geocode(i,cb){if(cache[i.query]){cb(cache[i.query]);return}
-    geocoder.geocode({address:i.query,componentRestrictions:{country:'AR'}},function(res,st){
-      if(st==='OK'&&res[0]){var l=res[0].geometry.location,p={lat:l.lat(),lng:l.lng()};cache[i.query]=p;save();cb(p)}else cb(null)})}
-  function place(i){if(i.marker||i.failed)return;
-    geocode(i,function(p){if(!p){i.failed=true;return}
-      i.marker=new google.maps.Marker({position:p,map:map,title:i.name,icon:i.sede?undefined:{path:google.maps.SymbolPath.CIRCLE,scale:7,fillColor:'#d91b6f',fillOpacity:1,strokeColor:'#fff',strokeWeight:2}});
-      i.marker.addListener('click',function(){infow.setContent(infoHtml(i));infow.open(map,i.marker)});
-      syncMarkers(filtered())})}
-  function syncMarkers(f){items.forEach(function(i){if(i.marker)i.marker.setVisible(f.indexOf(i)>-1)});
-    var b=new google.maps.LatLngBounds(),n=0;f.forEach(function(i){if(i.marker){b.extend(i.marker.getPosition());n++}});
-    if(n>1&&(q.value||reg.value))map.fitBounds(b,40)}
-  function focusItem(i,li){[].forEach.call(list.children,function(x){x.classList.remove('on')});li.classList.add('on');
-    if(!map){mapEl.innerHTML='<iframe title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q='+encodeURIComponent(i.query)+'&z='+(i.sede?15:13)+'&output=embed"></iframe>';return}
-    place(i);var go=function(){if(i.marker){map.panTo(i.marker.getPosition());map.setZoom(i.sede?16:13);infow.setContent(infoHtml(i));infow.open(map,i.marker)}else setTimeout(go,300)};setTimeout(go,150)}
-  q.addEventListener('input',render);reg.addEventListener('change',render);
-  window.__bagsaInit=function(){
-    map=new google.maps.Map(mapEl,{center:{lat:-36.6,lng:-59.2},zoom:7,mapTypeControl:false,streetViewControl:false});
-    geocoder=new google.maps.Geocoder();infow=new google.maps.InfoWindow();
-    items.forEach(function(i,k){setTimeout(function(){place(i)},k*40)});render()};
-  render();
-  if(KEY){var s=document.createElement('script');s.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(KEY)+'&callback=__bagsaInit&loading=async';s.async=true;document.head.appendChild(s)}
-  else{mapEl.innerHTML='<iframe title="Sede central" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q='+encodeURIComponent(D.sede.query)+'&z=15&output=embed"></iframe>'}
+  function cap(s){return s.toLowerCase().replace(/(^|[\s\-\/'])(\p{L})/gu,function(m,a,b){return a+b.toUpperCase()}).replace(/\b(De|La|Las|Del|Y)\b/g,function(m){return m.toLowerCase()}).replace(/^./,function(c){return c.toUpperCase()})}
+  Array.from(new Set(R.map(function(r){return r.ur}))).forEach(function(u){var o=document.createElement('option');o.value=u;o.textContent=u==='VG'?'Villa Gesell':cap(u);reg.appendChild(o)});
+  mapEl.innerHTML='<iframe title="Mapa de localidades y oficinas de BAGSA" loading="lazy" src="https://www.google.com/maps/d/embed?mid='+mid+'&ehbc=2E312F"></iframe>';
+  function tel(n){return n?'<a href="tel:'+n.replace(/[^0-9+]/g,'')+'">'+esc(n)+'</a>':'—'}
+  function show(r,li){[].forEach.call(list.children,function(x){x.classList.remove('on')});li.classList.add('on');
+    var addr=r.dir+', '+cap(r.loc)+', Buenos Aires, Argentina';
+    det.innerHTML='<h3>'+esc(cap(r.loc))+' <span class="badge">'+esc(r.gas)+'</span></h3><dl><dt>Dirección de la oficina</dt><dd>'+esc(r.dir)+'</dd><dt>Código postal</dt><dd>'+esc(r.cp)+'</dd><dt>Horario de atención</dt><dd>'+esc(r.hor)+'</dd><dt>Atención comercial</dt><dd>'+tel(r.at)+'</dd><dt>Emergencias</dt><dd>'+tel(r.em)+'</dd><dt>Región</dt><dd>'+esc(r.ur==='VG'?'Villa Gesell':cap(r.ur))+'</dd></dl><p style="margin:12px 0 0"><a class="btn" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(addr)+'">Cómo llegar</a></p>';
+    det.classList.add('on');if(window.innerWidth<=860)det.scrollIntoView({behavior:'smooth',block:'nearest'})}
+  function render(){var t=q.value.trim().toLowerCase(),f=R.filter(function(r){return(!reg.value||r.ur===reg.value)&&(!gas.value||r.gas===gas.value)&&(!t||r.loc.toLowerCase().indexOf(t)>-1)});
+    list.innerHTML='';f.forEach(function(r){var li=document.createElement('li');li.innerHTML='<button type="button"><span>'+esc(cap(r.loc))+'</span><small>'+esc(r.gas)+'</small></button>';li.firstChild.addEventListener('click',function(){show(r,li)});list.appendChild(li)});
+    count.textContent=f.length+(f.length===1?' localidad':' localidades')}
+  [q,reg,gas].forEach(function(e){e.addEventListener('input',render)});render();
 })();
 </script>
 <script>
