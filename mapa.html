@@ -591,7 +591,7 @@
       <div class="map-wrap">
         <div class="map-side">
           <input id="q" type="search" placeholder="Buscá tu localidad…" aria-label="Buscar localidad" autocomplete="off">
-          <select id="reg" aria-label="Filtrar por región"><option value="">Todas las regiones</option></select>
+          <select id="reg" aria-label="Filtrar por regional"><option value="">Todas las regionales</option></select>
           <select id="gas" aria-label="Filtrar por tipo de gas"><option value="">GN y GLP</option><option value="GN">Gas natural (GN)</option><option value="GLP">Gas licuado (GLP)</option></select>
           <div class="map-count" id="count" aria-live="polite"></div>
           <ul class="loc-list" id="list"></ul>
@@ -658,12 +658,12 @@
   var q=document.getElementById('q'),reg=document.getElementById('reg'),gas=document.getElementById('gas'),list=document.getElementById('list'),count=document.getElementById('count'),det=document.getElementById('detail'),mapEl=document.getElementById('map');
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function cap(s){return s.toLowerCase().replace(/(^|[\s\-\/'])(\p{L})/gu,function(m,a,b){return a+b.toUpperCase()}).replace(/\b(De|La|Las|Del|Y)\b/g,function(m){return m.toLowerCase()}).replace(/^./,function(c){return c.toUpperCase()})}
-  Array.from(new Set(R.map(function(r){return r.ur}))).forEach(function(u){var o=document.createElement('option');o.value=u;o.textContent=u==='VG'?'Villa Gesell':cap(u);reg.appendChild(o)});
+  ['Regional La Plata','Regional Norte','Regional Oeste','Regional Sur','Regional Este'].forEach(function(u){var o=document.createElement('option');o.value=u;o.textContent=u;reg.appendChild(o)});
   mapEl.innerHTML='<iframe title="Mapa de localidades y oficinas de BAGSA" loading="lazy" src="https://www.google.com/maps/d/embed?mid='+mid+'&ehbc=2E312F"></iframe>';
   function tel(n){return n?'<a href="tel:'+n.replace(/[^0-9+]/g,'')+'">'+esc(n)+'</a>':'—'}
   function show(r,li){[].forEach.call(list.children,function(x){x.classList.remove('on')});li.classList.add('on');
     var addr=r.dir+', '+cap(r.loc)+', Buenos Aires, Argentina';
-    det.innerHTML='<h3>'+esc(cap(r.loc))+' <span class="badge">'+esc(r.gas)+'</span></h3><dl><dt>Dirección de la oficina</dt><dd>'+esc(r.dir)+'</dd><dt>Código postal</dt><dd>'+esc(r.cp)+'</dd><dt>Horario de atención</dt><dd>'+esc(r.hor)+'</dd><dt>Atención comercial</dt><dd>'+tel(r.at)+'</dd><dt>Emergencias</dt><dd>'+tel(r.em)+'</dd><dt>Región</dt><dd>'+esc(r.ur==='VG'?'Villa Gesell':cap(r.ur))+'</dd></dl><p style="margin:12px 0 0"><a class="btn" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(addr)+'">Cómo llegar</a></p>';
+    det.innerHTML='<h3>'+esc(cap(r.loc))+' <span class="badge">'+esc(r.gas)+'</span></h3><dl><dt>Dirección de la oficina</dt><dd>'+esc(r.dir)+'</dd><dt>Código postal</dt><dd>'+esc(r.cp)+'</dd><dt>Horario de atención</dt><dd>'+esc(r.hor)+'</dd><dt>Atención comercial</dt><dd>'+tel(r.at)+'</dd><dt>Emergencias</dt><dd>'+tel(r.em)+'</dd><dt>Regional</dt><dd>'+esc(r.ur)+'</dd></dl><p style="margin:12px 0 0"><a class="btn" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(addr)+'">Cómo llegar</a></p>';
     det.classList.add('on');if(window.innerWidth<=860)det.scrollIntoView({behavior:'smooth',block:'nearest'})}
   function render(){var t=q.value.trim().toLowerCase(),f=R.filter(function(r){return(!reg.value||r.ur===reg.value)&&(!gas.value||r.gas===gas.value)&&(!t||r.loc.toLowerCase().indexOf(t)>-1)});
     list.innerHTML='';f.forEach(function(r){var li=document.createElement('li');li.innerHTML='<button type="button"><span>'+esc(cap(r.loc))+'</span><small>'+esc(r.gas)+'</small></button>';li.firstChild.addEventListener('click',function(){show(r,li)});list.appendChild(li)});
