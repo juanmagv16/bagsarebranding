@@ -401,6 +401,28 @@
     .contact-form { grid-template-columns: 1fr; padding: 20px; }
     .promo { border-radius: 22px; }
   }
+
+  .llega{background:#f4f9ff}
+  .llega-box{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+  .llega h2{font-family:var(--font-head);font-size:clamp(26px,3.2vw,38px);margin:12px 0}
+  .llega form{display:flex;gap:10px;flex-wrap:wrap}
+  .llega input{flex:1 1 220px;font:inherit;font-size:17px;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;min-width:0}
+  .llega-res{margin-top:14px;border-radius:14px;padding:16px 18px;background:#fff;border:1.5px solid var(--line);display:none}
+  .llega-res.on{display:block}.llega-res.no{border-color:var(--pink)}
+  .llega-res h3{margin:0 0 6px;font-family:var(--font-head);font-size:18px}
+  .llega-res p{margin:4px 0;font-size:15px;overflow-wrap:anywhere}
+  .scam{background:#fff4e5;border-top:3px solid #f5a524;border-bottom:3px solid #f5a524}
+  .scam .container{display:flex;gap:18px;align-items:center;padding:20px 0}
+  .scam svg{flex:none;width:40px;height:40px}
+  .scam h2{font-family:var(--font-head);font-size:19px;margin:0 0 4px}
+  .scam p{margin:0;font-size:15px;color:#4d3a12}
+  .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:26px}
+  .news{display:flex;flex-direction:column;gap:8px;padding:22px;border:1.5px solid var(--line);border-radius:var(--radius);background:#fff;text-decoration:none;color:var(--ink)}
+  .news:hover,.news:focus-visible{background:#eaf3ff}
+  .news time{font-size:13px;color:var(--teal);font-weight:700}
+  .news b{font-family:var(--font-head);font-size:18px}
+  .news span{font-size:15px;color:var(--muted)}
+  @media(max-width:860px){.llega-box,.news-grid{grid-template-columns:1fr}.scam .container{align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -423,6 +445,7 @@
         <li class="has-sub"><a href="index.html#servicios">Servicios</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Servicios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><h5>Facturas</h5><ul><li><a href="factura.html">Conocé tu factura</a></li><li><a href="https://oficinavirtual.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Descargá tu factura</a></li><li><a href="https://www.bagsa.com.ar/old/cupon/index.php" target="_blank" rel="noopener noreferrer">Cupón de pago</a></li><li><a href="factura.html#facturas">Simulador de consumo</a></li><li><a href="factura.html#electronica">Factura electrónica</a></li></ul></div><div class="sub-col"><h5>Medios de pago</h5><ul><li><a href="oficina-virtual.html#pagos">Pagá tu factura con crédito</a></li><li><a href="oficina-virtual.html#pagos">Débito automático</a></li></ul></div><div class="sub-col"><h5>Matriculados</h5><ul><li><a href="seguridad.html#buscador">Listado de gasistas</a></li><li><a href="seguridad.html#buscador">¿Por qué un gasista?</a></li><li><a href="seguridad.html#normativa">Categorías</a></li><li><a href="seguridad.html#normativa">Documentación</a></li><li><a href="seguridad.html#normativa">Formularios</a></li><li><a href="https://oficinamatriculados.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Portal Matriculados</a></li></ul></div></div></li>
         <li class="has-sub"><a href="tramites.html">Información</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Información"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><h5>Trámites</h5><ul><li><a href="tramites.html#obtencion">Obtención del servicio</a></li><li><a href="tramites.html#baja">Baja del servicio</a></li><li><a href="tramites.html#titularidad">Cambio de titularidad</a></li><li><a href="tramites.html#domicilio">Cambio de domicilio</a></li><li><a href="tramites.html#reconexion">Reconexión</a></li><li><a href="tramites.html#inquilinos">Información para inquilinos</a></li></ul></div><div class="sub-col"><h5>Normativas</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/normativas/#reglamento-de-servicios" target="_blank" rel="noopener noreferrer">Reglamento de servicios</a></li><li><a href="https://www.bagsa.com.ar/index.php/normativas/#marco-regulatorio" target="_blank" rel="noopener noreferrer">Marco regulatorio</a></li><li><a href="https://www.bagsa.com.ar/index.php/normativas/#instalaciones-internas" target="_blank" rel="noopener noreferrer">Instalaciones internas</a></li><li><a href="https://www.bagsa.com.ar/index.php/normativas/#artefactos" target="_blank" rel="noopener noreferrer">Artefactos</a></li></ul></div><div class="sub-col"><h5>Tarifas</h5><ul><li><a href="tarifas.html#gas-natural">Cuadro tarifario</a></li><li><a href="tarifas.html#tasas">Cuadros tasas y cargos</a></li><li><a href="tarifas.html#sef">Subsidio Energético Focalizado</a></li></ul></div><div class="sub-col"><h5>Más información</h5><ul><li><a href="https://www.bagsa.com.ar/index.php/preguntas-frecuentes/" target="_blank" rel="noopener noreferrer">Preguntas frecuentes</a></li><li><a href="https://www.bagsa.com.ar/index.php/listado-de-empresas-contratistas/" target="_blank" rel="noopener noreferrer">Empresas contratistas</a></li><li><a href="https://www.bagsa.com.ar/index.php/avance-de-obras/" target="_blank" rel="noopener noreferrer">Avance de obras</a></li><li><a href="https://www.bagsa.com.ar/index.php/licitaciones-activas/" target="_blank" rel="noopener noreferrer">Licitaciones activas</a></li></ul></div></div></li>
         <li class="has-sub"><a href="seguridad.html">Seguridad</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Seguridad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><ul><li><a href="guias-de-seguridad.html#manual">Manual de emergencias y falta de suministro</a></li><li><a href="guias-de-seguridad.html#consumo">Consumo responsable</a></li><li><a href="guias-de-seguridad.html#gas-por-red">Gas por red</a></li><li><a href="guias-de-seguridad.html#monoxido">Monóxido de carbono</a></li><li><a href="guias-de-seguridad.html#medidas">Medidas de seguridad</a></li><li><a href="guias-de-seguridad.html#prevencion">Prevención de daños</a></li></ul></div></div></li>
+        <li class="has-sub"><a href="seguridad.html#portal">Gasistas</a><button class="sub-toggle" type="button" aria-expanded="false" aria-label="Abrir submenú de Gasistas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="submenu"><div class="sub-col"><ul><li><a href="https://oficinamatriculados.bagsa.com.ar/" target="_blank" rel="noopener noreferrer">Portal de matriculados</a></li><li><a href="seguridad.html#buscador">Buscador de gasistas matriculados</a></li><li><a href="seguridad.html#normativa">Normativa</a></li><li><a href="guias-de-seguridad.html#prevencion">Prevención de daños</a></li></ul></div></div></li>
         <li><a href="mapa.html">Dónde estamos</a></li>
         <li><a href="index.html#contacto">Contacto</a></li>
       </ul>
@@ -524,6 +547,47 @@
       <div class="stat"><b>+40.000</b><span>Usuarios residenciales, comerciales e industriales</span></div>
       <div class="stat"><b>+60</b><span>Localidades bonaerenses con servicio</span></div>
       <div class="stat"><b>24 hs</b><span>Atención de emergencias</span></div>
+    </div>
+  </section>
+
+  <section class="section llega" id="llega-el-gas">
+    <div class="container llega-box">
+      <div>
+        <span class="tag">Cobertura</span>
+        <h2>¿Llega el gas a mi domicilio?</h2>
+        <p>Escribí tu localidad y te decimos si BAGSA tiene servicio, qué tipo de gas distribuye y dónde queda la oficina.</p>
+      </div>
+      <div>
+        <form id="llega-form" novalidate>
+          <input id="llega-q" list="llega-list" type="search" placeholder="Ej.: Magdalena, Tres Arroyos, Villa Gesell" aria-label="Tu localidad" autocomplete="off">
+          <datalist id="llega-list"></datalist>
+          <button class="btn" type="submit">Consultar</button>
+        </form>
+        <div class="llega-res" id="llega-res" role="status" aria-live="polite"></div>
+        <p style="margin:12px 0 0;font-size:14px"><a href="mapa.html">Ver el mapa completo de localidades y oficinas</a></p>
+      </div>
+    </div>
+  </section>
+
+  <aside class="scam" id="estafas" aria-label="Aviso sobre estafas">
+    <div class="container">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#b36b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v5M12 18h.01"/></svg>
+      <div>
+        <h2>Cuidado con las estafas</h2>
+        <p>Usá solo los canales oficiales: 0800-122-5888, WhatsApp 221-572-7434 y atencioncomercial@bagsa.com.ar. Desconfiá de descuentos o pedidos de datos de pago que lleguen por redes o mensajes de origen desconocido, y no compartas tus datos personales.</p>
+      </div>
+    </div>
+  </aside>
+
+  <section class="section" id="novedades">
+    <div class="container">
+      <span class="tag">Novedades</span>
+      <h2 style="font-family:var(--font-head);font-size:clamp(26px,3.2vw,38px);margin:12px 0 0">Lo último para tener en cuenta</h2>
+      <div class="news-grid">
+        <a class="news" href="tarifas.html"><time>Octubre 2026</time><b>Cuadros tarifarios vigentes</b><span>Consultá las tarifas de gas natural y de propano por redes (GLP).</span></a>
+        <a class="news" href="https://www.argentina.gob.ar/subsidios" target="_blank" rel="noopener noreferrer"><time>Subsidios</time><b>Subsidio Energético Focalizado</b><span>Conocé cómo acceder al beneficio para usuarios residenciales.</span></a>
+        <a class="news" href="guias-de-seguridad.html#monoxido"><time>Seguridad</time><b>Monóxido de carbono: cómo prevenirlo</b><span>Cuidados simples para evitar intoxicaciones en tu hogar.</span></a>
+      </div>
     </div>
   </section>
 
@@ -696,5 +760,21 @@
     });
   });
 </script>
+<script src="data/localidades.js"></script>
+<script>
+(function(){
+  var R=window.BAGSA_ROWS||[],f=document.getElementById('llega-form'),q=document.getElementById('llega-q'),out=document.getElementById('llega-res'),dl=document.getElementById('llega-list');
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim()}
+  function cap(s){return s.toLowerCase().replace(/(^|[\s\-\/'])(\p{L})/gu,function(m,a,b){return a+b.toUpperCase()}).replace(/\b(De|La|Las|Del|Y)\b/g,function(m){return m.toLowerCase()})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  R.forEach(function(r){var o=document.createElement('option');o.value=cap(r.loc);dl.appendChild(o)});
+  f.addEventListener('submit',function(e){e.preventDefault();var t=norm(q.value);if(!t)return;
+    var m=R.filter(function(r){return norm(r.loc)===t});if(!m.length)m=R.filter(function(r){return norm(r.loc).indexOf(t)>-1});
+    out.className='llega-res on';
+    if(!m.length){out.classList.add('no');out.innerHTML='<h3>No encontramos esa localidad en nuestra lista</h3><p>Revisá cómo la escribiste o consultanos al <a href="tel:08001225888">0800-122-5888</a> o por WhatsApp al 221-572-7434.</p>';return}
+    out.innerHTML=m.slice(0,3).map(function(r){return '<h3>Sí, hay servicio en '+esc(cap(r.loc))+'</h3><p>'+(r.gas==='GN'?'Distribuimos gas natural por redes.':'Distribuimos gas propano (GLP) por redes.')+'</p><p><b>Oficina:</b> '+esc(r.dir)+'</p><p><b>Horario:</b> '+esc(r.hor)+'</p><p><b>Atención:</b> <a href="tel:'+r.at.replace(/[^0-9]/g,'')+'">'+esc(r.at)+'</a> · <b>Emergencias:</b> <a href="tel:'+r.em.replace(/[^0-9]/g,'')+'">'+esc(r.em)+'</a></p><p style="color:#4d5360;font-size:13px">'+esc(r.ur)+'</p>'}).join('<hr style="border:0;border-top:1px solid #e3ecf7">')});
+})();
+</script>
+<script src="assets/mejoras.js" defer></script>
 </body>
 </html>
