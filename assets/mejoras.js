@@ -56,6 +56,8 @@
     ".bx-sos small{display:block;font-weight:500;font-size:11px;opacity:.9}" +
     "@media(min-width:861px){ul.menu{gap:16px!important}.bx-search-btn span{display:none}.bx-search-btn{padding:9px}}@media(max-width:860px){.bx-sos{display:block}.bx-search-btn{margin:8px 0}}";
   css.textContent +=
+    ".illus{padding:0!important;overflow:hidden;display:block!important;position:relative}.illus img{display:block;width:100%;height:100%;min-height:inherit;object-fit:cover}.hero-media.illus img{position:absolute;inset:0}" +
+    ".ic{flex:none;width:44px;height:44px;border-radius:12px;background:#eaf3ff;color:#00589b;display:grid;place-items:center;margin-bottom:6px}.ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.guide .ic,.news .ic,.topic .ic{align-self:flex-start}" +
     ".quick{background:#fff;border-bottom:1px solid #d6e6f7}.quick .container{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 0}.quick b{font:700 14px var(--font-head,sans-serif);margin-right:4px}" +
     ".quick a{text-decoration:none;color:#00589b;font-weight:600;font-size:14px;padding:8px 14px;border:1.5px solid #2b82e6;border-radius:99px;background:#fff}.quick a:hover,.quick a:focus-visible{background:#eaf3ff}" +
     ".topics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}.topic{display:flex;flex-direction:column;gap:4px;padding:18px 20px;border:1.5px solid #2b82e6;border-radius:16px;background:#fff;text-decoration:none;color:#1b1d24}.topic:hover,.topic:focus-visible{background:#eaf3ff}.topic b{font:600 17px var(--font-head,sans-serif)}.topic span{font-size:14px;color:#4d5360}" +
@@ -142,4 +144,28 @@ document.head.appendChild(css);
   // Abrir el trámite al llegar por un enlace con #
   function openHash() { var el = location.hash && document.getElementById(location.hash.slice(1)); if (el && el.tagName === "DETAILS") el.open = true; }
   openHash(); window.addEventListener("hashchange", openHash);
+
+  // Íconos para tarjetas
+  var IC = {
+    manual: '<path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3z"/><path d="M5 17a3 3 0 013-3h11M9 8h6"/>',
+    consumo: '<path d="M12 21c4 0 7-3 7-7 0-4-3-6-4-9-2 2-3 4-3 6-1-1-2-2-2-4-3 3-5 6-5 9 0 3 3 5 7 5z"/>',
+    "gas-por-red": '<path d="M3 9h10v6H3zM13 12h8M7 9V5M7 15v4"/><circle cx="18" cy="12" r="0"/>',
+    monoxido: '<path d="M12 3 2 20h20z"/><path d="M12 10v5M12 18h.01"/>',
+    medidas: '<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="m9 12 2 2 4-4"/>',
+    prevencion: '<path d="M4 20 14 10M14 10l3-3 3 3-3 3M4 20l4-1-3-3z"/><path d="M15 4l1 3M20 9l-3 1"/>',
+    obtencion: '<path d="M9 3v5M15 3v5M7 8h10v4a5 5 0 01-10 0zM12 17v4"/>',
+    baja: '<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/>',
+    titularidad: '<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0112 0M16 6h5m0 0-2-2m2 2-2 2M21 16h-5m0 0 2-2m-2 2 2 2"/>',
+    domicilio: '<path d="M4 11 12 4l8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
+    reconexion: '<path d="M12 3v9M6.5 7a8 8 0 1011 0"/>',
+    inquilinos: '<circle cx="8" cy="14" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',
+    doc: '<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/>',
+    badge: '<circle cx="12" cy="9" r="5"/><path d="M8.5 13 7 21l5-3 5 3-1.500-8"/>',
+    alert: '<path d="M12 3 2 20h20z"/><path d="M12 10v5M12 18h.01"/>'
+  };
+  function icon(k) { var d = document.createElement("span"); d.className = "ic"; d.setAttribute("aria-hidden", "true"); d.innerHTML = '<svg viewBox="0 0 24 24">' + IC[k] + "</svg>"; return d; }
+  function hashOf(a) { return (a.getAttribute("href") || "").split("#")[1]; }
+  document.querySelectorAll(".guide, .topic").forEach(function (a) { var k = hashOf(a); if (k && IC[k]) a.insertBefore(icon(k), a.firstChild); });
+  var nk = ["doc", "badge", "alert"];
+  document.querySelectorAll(".news").forEach(function (a, i) { a.insertBefore(icon(nk[i % 3]), a.firstChild); });
 })();
