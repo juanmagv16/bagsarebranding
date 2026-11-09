@@ -31,6 +31,9 @@
     ["¿Llega el gas a mi domicilio?", "index.html#llega-el-gas", "llega gas domicilio zona cobertura localidad red"],
     ["Contacto y atención comercial", "index.html#contacto", "contacto telefono whatsapp mail atencion 0800 consulta"],
     ["Novedades", "index.html#novedades", "novedades noticias avisos"],
+    ["Licitaciones activas","https://www.bagsa.com.ar/index.php/licitaciones-activas/","licitacion licitaciones compras contratacion transparencia"],
+    ["Código de Ética","https://www.bagsa.com.ar/index.php/3-2/","codigo etica transparencia integridad"],
+    ["Avance de obras","https://www.bagsa.com.ar/index.php/avance-de-obras/","obras avance transparencia"],
     ["Cuidado con las estafas", "index.html#estafas", "estafa fraude falso descuento seguridad datos"]
   ];
   function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
@@ -51,8 +54,18 @@
     ".bx-hint{font-size:13px;color:#4d5360;margin:8px 0 0}" +
     ".bx-sos{display:none;position:fixed;right:14px;bottom:14px;z-index:90;background:#690000;color:#fff;text-decoration:none;border-radius:99px;padding:12px 18px;font:700 14px/1.1 var(--font-head,sans-serif);box-shadow:0 8px 24px rgba(0,0,0,.35);text-align:center}" +
     ".bx-sos small{display:block;font-weight:500;font-size:11px;opacity:.9}" +
-    "@media(max-width:860px){.bx-sos{display:block}.bx-search-btn{margin:8px 0}}";
-  document.head.appendChild(css);
+    "@media(min-width:861px){ul.menu{gap:16px!important}.bx-search-btn span{display:none}.bx-search-btn{padding:9px}}@media(max-width:860px){.bx-sos{display:block}.bx-search-btn{margin:8px 0}}";
+  css.textContent +=
+    ".quick{background:#fff;border-bottom:1px solid #d6e6f7}.quick .container{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 0}.quick b{font:700 14px var(--font-head,sans-serif);margin-right:4px}" +
+    ".quick a{text-decoration:none;color:#00589b;font-weight:600;font-size:14px;padding:8px 14px;border:1.5px solid #2b82e6;border-radius:99px;background:#fff}.quick a:hover,.quick a:focus-visible{background:#eaf3ff}" +
+    ".topics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}.topic{display:flex;flex-direction:column;gap:4px;padding:18px 20px;border:1.5px solid #2b82e6;border-radius:16px;background:#fff;text-decoration:none;color:#1b1d24}.topic:hover,.topic:focus-visible{background:#eaf3ff}.topic b{font:600 17px var(--font-head,sans-serif)}.topic span{font-size:14px;color:#4d5360}" +
+    "@media(max-width:860px){.topics{grid-template-columns:1fr 1fr}}@media(max-width:520px){.topics{grid-template-columns:1fr}}" +
+    ".bx-skip{position:absolute;left:-9999px;top:8px;z-index:300;background:#fff;color:#00589b;padding:10px 16px;border-radius:10px;font-weight:700}.bx-skip:focus{left:8px}" +
+    ".bx-a11y-btn{all:unset;box-sizing:border-box;cursor:pointer;position:fixed;left:14px;bottom:14px;z-index:90;width:46px;height:46px;border-radius:50%;background:#00589b;color:#fff;display:grid;place-items:center;font:700 16px var(--font-head,sans-serif);box-shadow:0 6px 18px rgba(0,0,0,.3)}" +
+    ".bx-a11y{display:none;position:fixed;left:14px;bottom:68px;z-index:91;background:#fff;color:#1b1d24;border-radius:14px;padding:12px;box-shadow:0 10px 30px rgba(0,0,0,.3);gap:8px;flex-direction:column;min-width:190px}.bx-a11y.on{display:flex}" +
+    ".bx-a11y button{all:unset;cursor:pointer;padding:9px 12px;border-radius:10px;border:1.5px solid #2b82e6;font-weight:600;font-size:14px;text-align:center}.bx-a11y button:hover,.bx-a11y button:focus-visible{background:#eaf3ff}.bx-a11y button[aria-pressed=true]{background:#00589b;color:#fff}" +
+    "html.bx-zoom .header-inner{flex-wrap:wrap;row-gap:10px}html.bx-zoom ul.menu{flex-wrap:wrap;row-gap:6px}html.bx-hc{--muted:#1b1d24;--line:#00589b}html.bx-hc a{text-decoration:underline}html.bx-hc body{font-weight:500}";
+document.head.appendChild(css);
 
   // Botón de búsqueda dentro del menú
   var menu = document.querySelector("ul.menu");
@@ -99,4 +112,34 @@
   sos.className = "bx-sos"; sos.href = "tel:08003332247"; sos.setAttribute("aria-label", "Llamar a emergencias, 0800-333-2247, las 24 horas");
   sos.innerHTML = "Emergencias<small>0800-333-2247 · 24 hs</small>";
   document.body.appendChild(sos);
+
+  // Saltar al contenido
+  var main = document.getElementById("contenido");
+  if (main) { var sk = document.createElement("a"); sk.className = "bx-skip"; sk.href = "#contenido"; sk.textContent = "Pasar al contenido principal"; document.body.insertBefore(sk, document.body.firstChild); }
+
+  // Barra de accesibilidad: tamaño de texto y contraste
+  var st = { z: 1, hc: false };
+  try { st = JSON.parse(localStorage.getItem("bx_a11y")) || st; } catch (e) {}
+  function apply() {
+    document.body.style.zoom = st.z === 1 ? "" : st.z;
+    document.documentElement.classList.toggle("bx-hc", !!st.hc);
+    document.documentElement.classList.toggle("bx-zoom", st.z > 1);
+    hcBtn.setAttribute("aria-pressed", st.hc ? "true" : "false");
+    try { localStorage.setItem("bx_a11y", JSON.stringify(st)); } catch (e) {}
+  }
+  var ab = document.createElement("button");
+  ab.type = "button"; ab.className = "bx-a11y-btn"; ab.textContent = "Aa"; ab.setAttribute("aria-label", "Opciones de accesibilidad"); ab.setAttribute("aria-expanded", "false");
+  var box = document.createElement("div"); box.className = "bx-a11y"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Accesibilidad");
+  function mk(t, fn) { var b = document.createElement("button"); b.type = "button"; b.textContent = t; b.addEventListener("click", fn); box.appendChild(b); return b; }
+  mk("Agrandar texto", function () { st.z = Math.min(1.3, +(st.z + 0.1).toFixed(2)); apply(); });
+  mk("Achicar texto", function () { st.z = Math.max(1, +(st.z - 0.1).toFixed(2)); apply(); });
+  var hcBtn = mk("Alto contraste", function () { st.hc = !st.hc; apply(); });
+  mk("Restablecer", function () { st = { z: 1, hc: false }; apply(); });
+  ab.addEventListener("click", function () { var o = box.classList.toggle("on"); ab.setAttribute("aria-expanded", o ? "true" : "false"); });
+  document.body.appendChild(box); document.body.appendChild(ab);
+  apply();
+
+  // Abrir el trámite al llegar por un enlace con #
+  function openHash() { var el = location.hash && document.getElementById(location.hash.slice(1)); if (el && el.tagName === "DETAILS") el.open = true; }
+  openHash(); window.addEventListener("hashchange", openHash);
 })();
